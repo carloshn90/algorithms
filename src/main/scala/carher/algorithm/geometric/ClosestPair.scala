@@ -28,7 +28,7 @@ object ClosestPair {
       if (centerPoints.length == 1) return minDistant
 
       val centerPointsSortedByY: Array[Point] = centerPoints.sortWith((p1: Point, p2: Point) => p1.y <= p2.y)
-      val centerDistant: Double = this.findClosestBruteForce(centerPointsSortedByY.slice(0, 8))
+      val centerDistant: Double = this.checkCenterPoints(centerPointsSortedByY)
 
       if (centerDistant <= minDistant) centerDistant else minDistant
     }
@@ -73,11 +73,28 @@ object ClosestPair {
       this.calculateMinDistantByPoint(point, points.tail, minDistAux)
   }
 
+  private def checkCenterPoints(points: Array[Point]): Double = {
+
+    if (points.length == 1)
+      return Double.MaxValue
+
+    if (points.length < 8)
+      this.findClosestBruteForce(points)
+    else
+      this.findClosestInCenter(points)
+  }
+
   private def calculateDistant(p1: Point, p2: Point): Double = {
 
     val xSq: Double = Math.pow(p1.x - p2.x, 2)
     val ySq: Double = Math.pow(p1.y - p2.y, 2)
 
     Math.sqrt(xSq + ySq)
+  }
+
+  @tailrec
+  private def findClosestInCenter(points: Array[Point], minDist: Double = Double.MaxValue): Double = points match {
+    case Array() => minDist
+    case points => this.findClosestInCenter(points.tail, this.calculateMinDistantByPoint(points.head, points.tail.slice(0, 7), minDist))
   }
 }
