@@ -12,7 +12,7 @@ object ParenthesisBalance {
     else
       stack.isEmpty
 
-  def addElementStack(c: Char, stack: mutable.Stack[Char]): mutable.Stack[Char]  =
+  private def addElementStack(c: Char, stack: mutable.Stack[Char]): mutable.Stack[Char]  =
     (this.isParenthesisOrBracket(c), this.isInStack(c, stack)) match {
       case (true, false)  => stack.push(c)
       case (true, true)   => removeLastElement(stack)
