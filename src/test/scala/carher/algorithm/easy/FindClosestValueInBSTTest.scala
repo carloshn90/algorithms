@@ -1,6 +1,7 @@
 package carher.algorithm.easy
 
 import carher.algorithm.UnitSpec
+import carher.algorithm.tree.{Node, Empty}
 
 class FindClosestValueInBSTTest extends UnitSpec {
 
